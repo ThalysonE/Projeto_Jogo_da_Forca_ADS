@@ -1,6 +1,26 @@
-let palavras = ["programador", "algoritmo", "javascript", "html", "css", "web", "frontend", "backend", "fullstack", "desenvolvimento", "aplicativo", "jogo", "site", "software"];
+let fundComp=["algoritmo","programador","binario","informatica"];
+let lingProg=["javascript","java","python","php"];
+let web=["html", "css", "frontend","backend","fullstack"];
 
-let palavra = palavras[Math.floor(Math.random() * palavras.length)]; // selecionar palavras aleatorias
+let elementFundC=4; 
+let elementLingP=4;   //Número de elementos em cada array
+let elementWeb=5;
+
+let indice1=Math.floor(Math.random()*3); // Escolhe um número aletório para o indice 1 da matriz
+
+let indice2;
+
+if(indice1==0){
+    indice2=Math.floor(Math.random()*elementFundC)
+} else if(indice1==1){
+    indice2=Math.floor(Math.random()*elementLingP)   // Escolhe um número aletório para o indice 2 da matriz
+} else{
+    indice2=Math.floor(Math.random()*elementWeb)
+}
+
+let palavras=[fundComp,lingProg,web];
+let palavra = palavras[indice1][indice2]; // Retorna uma palavra aleatória
+console.log(palavra)
 
 let tentativas = 6; // quantidade de tentativas
 let acertos = 0; //  quantidade de acertos 
@@ -96,5 +116,68 @@ function escolheLetra(letra) {
     if(tentativas  === -1){
         window.location.reload()
     }
+
+let btDica = document.getElementById("btDica"); //Botão dica
+let divDica = document.getElementById("dica");
+let mensagemDica=" ";
+let botaoAcionado = false // Variável auxiliar para o loop ser realizado apenas uma vez
+
+btDica.addEventListener('click',function Dica(){  //Teste da palavra com os arrays para retornar a dica 
+    if(!botaoAcionado){
+        for(let v=0;v<=2;v++){
+            if(v==0){
+                for(let z=0; z < elementFundC; z++){
+                    if(palavra == palavras[0][z]){
+                        mensagemDica = document.createTextNode("Fundamentos da Computação") // Retorna a meensagem da dica 
+                        divDica.appendChild(mensagemDica)
+                    }
+                }
+            }else if(v==1){  
+                for(let z=0; z < elementLingP; z++){
+                    if(palavra == palavras[1][z]){
+                        mensagemDica = document.createTextNode("Linguagem de Programação") // Retorna a dica a mensagem da dica
+                        divDica.appendChild(mensagemDica)
+                    }
+                }
+            }else{  
+                for(let z=0; z < elementWeb; z++){
+                    if(palavra == palavras[2][z]){
+                        mensagemDica = document.createTextNode("Progamação WEB") // Retorna a dica a mensagem da dica
+                        divDica.appendChild(mensagemDica)
+                    }
+                }
+            }
+        }
+        botaoAcionado = true
+    }   
+})
+
+
+let btNovaPalavra=document.getElementById("btEnviar")
+
+btNovaPalavra.addEventListener('click',function adicionarPalavras(){ //FUNCAO DE ADICIONAR PALAVRAS
+    let assunto=document.getElementById("assunto").value
+    let novaPalavra=document.getElementById("novaPalavra").value
+
+    if(assunto=='1'){
+        lingProg.push(novaPalavra)
+        elementLingP++
+    } else if(assunto=='2'){
+        fundComp.push(novaPalavra)
+        elementFundC++
+    } else if(assunto=='3'){
+        web.push(novaPalavra)
+        elementWeb++
+    } else{
+        alert("Digite uma opção válida")
+    }
+    console.log(palavras)
+})
+
+
+
+    
+
+
 
 } 
